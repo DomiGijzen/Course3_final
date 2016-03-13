@@ -1,0 +1,59 @@
+Feature Selection 
+=================
+
+The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+
+Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
+
+Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
+
+These signals were used to estimate variables of the feature vector for each pattern:  
+'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+
+tBodyAcc-XYZ
+tGravityAcc-XYZ
+tBodyAccJerk-XYZ
+tBodyGyro-XYZ
+tBodyGyroJerk-XYZ
+tBodyAccMag
+tGravityAccMag
+tBodyAccJerkMag
+tBodyGyroMag
+tBodyGyroJerkMag
+fBodyAcc-XYZ
+fBodyAccJerk-XYZ
+fBodyGyro-XYZ
+fBodyAccMag
+fBodyAccJerkMag
+fBodyGyroMag
+fBodyGyroJerkMag
+
+The set of variables that were estimated from these signals are: 
+
+mean(): Mean value
+std(): Standard deviation
+
+Data prepping
+=================
+The following datasets are loaded into R and prepared as following below:
+-Activity_labels.tx -> column names: "activity", "activity_name";
+-Features.txt -> column names: "feature", "feature_name";
+-y_test and y_train -> column names: "activity";
+-subject_test and subject_train -> column names: "subject";
+-X_test and X_train -> column names: the features.txt are used as column names;
+
+The loaded datasets are combined as shown below:
+-y_test and y_train are merged with the activity labels from Activity_labels.txt and named activity_test and activity_train;
+-subject_test, activity_test and X_test are combind to one dataframe showing subject(id), activity and activity name and alle features and named testset (same for train data -> trainset);
+-testset and trainset are combined to a totalset.
+
+Analysis
+=================
+-From the totalset, all columns containing mean or std calculations and subject, activity and activityname are selected for further analysis and named extractset;
+-The extractset is grouped per subject and activity;
+-The grouped data is summarised using the mean-function;
+-Summarised column are renamed with a prefix(Mean_of_);
+
+Export
+=================
+The final analysis is exported with write.table function and named upload_table.txt.
